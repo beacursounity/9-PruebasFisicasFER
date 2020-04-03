@@ -19,6 +19,7 @@ public class TroncomovilScript : MonoBehaviour {
     private WheelCollider wcFrontL, wcFrontR, wcBackL, wcBackR;
 
     private void Start() {
+        // RECOGEMOS LOS COMPONENTES DE LAS RUEDAS
         wcFrontL = GameObject.Find("FrontL").GetComponent<WheelCollider>();
         wcFrontR = GameObject.Find("FrontR").GetComponent<WheelCollider>();
         wcBackL = GameObject.Find("BackL").GetComponent<WheelCollider>();
@@ -26,6 +27,7 @@ public class TroncomovilScript : MonoBehaviour {
     }
 
     private void Update() {
+        // (INT) TRAFORMA EN ENTERO LA MAGNITUD
         fSpeed = (int)GetComponent<Rigidbody>().velocity.magnitude;
         txtSpeed.text = ((int)fSpeed).ToString();
 
@@ -40,11 +42,12 @@ public class TroncomovilScript : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        //RECOGER COORDENADAS
+        //RECOGER COORDENADAS -1 a +1
         vPos = Input.GetAxis("Vertical");
         hPos = Input.GetAxis("Horizontal");
 
-        //RUEDAS DIRECTRICES
+        //RUEDAS DIRECTRICES SOBRE A POSICION HORIZONTAL DERECHA E IZQUIERDA
+        // ESTAS LLEVAN LA DIRECCION
         wcFrontL.steerAngle = anguloMaximoRotacion * hPos;
         wcFrontR.steerAngle = anguloMaximoRotacion * hPos;
 
@@ -56,10 +59,14 @@ public class TroncomovilScript : MonoBehaviour {
                 materialFreno.DisableKeyword("_EMISSION");
                 //RUEDAS MOTRICES
                 SoltarFreno();
+                // RUEDAS DE ATRAS PARA QUE SE MUEVAN
                 wcBackL.motorTorque = fuerzaMaximaMotor * vPos;
                 wcBackR.motorTorque = fuerzaMaximaMotor * vPos;
-            } else if (vPos < 0 && fSpeed>0) {
-                //PINT EN LA UI LA MARCHA
+
+            } 
+            // SI LE DAMOS HACIA ATRAS LO FRENAREMOS 
+            else if (vPos < 0 && fSpeed>0) {
+                //PINTA EN LA UI LA MARCHA
                 txtMarcha.text = "0";
                 //ACTIVA LA LUZ DE FRENADO
                 materialFreno.EnableKeyword("_EMISSION");
@@ -71,6 +78,8 @@ public class TroncomovilScript : MonoBehaviour {
                 wcBackR.motorTorque = fuerzaMaximaMotor * vPos;
             }
         } else {
+            // SE LE DA UN VALOR INFINITO PARA INICIALIZARLO DE ALGUNA MANERA
+            // NO HACE NADA
             wcFrontL.brakeTorque = Mathf.Infinity;
             wcFrontR.brakeTorque = Mathf.Infinity;
             wcBackL.brakeTorque = Mathf.Infinity;
@@ -86,6 +95,7 @@ public class TroncomovilScript : MonoBehaviour {
         wcBackR.brakeTorque = fuerzaFrenado;
     }
     private void SoltarFreno() {
+        // BRAKETORQUE ES EL FRENO A 0 NO ESTA PUESTO EL FRENO 
         wcFrontL.brakeTorque = 0;
         wcFrontR.brakeTorque = 0;
         wcBackL.brakeTorque = 0;

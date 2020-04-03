@@ -13,7 +13,7 @@ public class RaycastScript : MonoBehaviour {
         }
 	}
     //RaycastAll
-    /*
+    //LANZAMOS EL RAYO Y NOS DEVUELVE UN ARRAY
     public void Disparar() {
         RaycastHit[] rhs = Physics.RaycastAll(
             origen.position,
@@ -24,23 +24,24 @@ public class RaycastScript : MonoBehaviour {
             }
         }
     }
-    */
+    
 
 
     // Raycast
-    private void Disparar() {
+    /*private void Disparar() {
         RaycastHit rh;
+        // PARA SACAR LA INFORMACION DE CON QUIEN SE HA CHOCADO SOLO UN OBJETO
         //bool hayImpacto = Physics.Raycast(origen.position, origen.forward);
         bool hayImpacto = Physics.Raycast(
             origen.position, 
             origen.forward,
             out rh);
-        //Debug.DrawRay(origen.position, origen.forward, Color.red, 50);
+        Debug.DrawRay(origen.position, origen.forward, Color.red, 100);
         texto.text = "" + hayImpacto;
         if (hayImpacto) {
             string nombreObjectoImpactado = rh.transform.gameObject.name;
             texto.text = nombreObjectoImpactado;
         }
         
-    }
+    }*/
 }
