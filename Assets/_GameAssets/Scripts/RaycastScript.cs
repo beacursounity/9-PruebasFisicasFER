@@ -18,6 +18,7 @@ public class RaycastScript : MonoBehaviour {
         RaycastHit[] rhs = Physics.RaycastAll(
             origen.position,
             origen.forward);
+        Debug.DrawRay(origen.position, origen.forward * 100, Color.red, 4);
         if (rhs.Length != 0) {
             for (int i = 0; i < rhs.Length; i++) {
                 print(rhs[i].transform.gameObject.name);
