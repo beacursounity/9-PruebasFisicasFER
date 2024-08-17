@@ -21,7 +21,6 @@ public class AvionScript : MonoBehaviour {
         //Y HORIZONTAL FLECHA DERECHA EN POSITIVO /F.IZQUIERDA EN NEGATIVO
         //Z A LA F.DERECHA ROTA EN NEGATIVO /F.IZQUIERDA POSITIVO
         transform.Rotate(new Vector3(vPos, hPos, hPos*-1));
-    
 
         /*
          * PARA UN ELEMENTO TERRESTRE APLICA VECTOR DE VELOCIDAD Y GRAVEDAD

@@ -33,16 +33,16 @@ public class TroncomovilScript : MonoBehaviour {
     public Material materialFreno;
 
     private void Start() {
-        // BUSCAMOS LA RUEDA FRONTL Y RECOGEMOS SU COMPONENTE WHEELCOLLIDER
+        // BUSCAMOS LAS RUEDAS Y RECOGEMOS SU COMPONENTE WHEELCOLLIDER
         // TAMBIEN SE PODRIA HACER CREANDO UNA VARIABLE PUBLICA Y ARRASTRANDO 
         // EL OBJ EN EL EDITOR. DA LOS MISMO HACERLO DE UNA MANERA QUE DE OTRA
         // DA MENOS PROBABILIDAD DE ERROR DE ARRASTRANDOLO PQ ASI NO NOS CONFUNDIMOS AL ESCRIBIR EL NOMBRE
-        wcFrontL = GameObject.Find("FrontLeft").GetComponent<WheelCollider>();
-        wcFrontR = GameObject.Find("FrontRight").GetComponent<WheelCollider>();
-        wcBackL = GameObject.Find("BackLeft").GetComponent<WheelCollider>();
-        wcBackR = GameObject.Find("BackRight").GetComponent<WheelCollider>();
+        wcFrontL = GameObject.Find("Rueda FrontLeft").GetComponent<WheelCollider>();
+        wcFrontR = GameObject.Find("Rueda FrontRight").GetComponent<WheelCollider>();
+        wcBackL = GameObject.Find("Rueda BackLeft").GetComponent<WheelCollider>();
+        wcBackR = GameObject.Find("Rueda BackRight").GetComponent<WheelCollider>();
 
-        txtFrenoMano.text = "Handbrake: off";
+        txtFrenoMano.text = "Freno de mano: Off";
 
         // DESACTIVA LA LUZ DE FRENADO AL PRINCIPIO
         materialFreno.DisableKeyword("_EMISSION");
@@ -63,7 +63,7 @@ public class TroncomovilScript : MonoBehaviour {
         // el int redondea.
 
         // LA CONVERTIMOS A ENTERA Y QUITAMOS LOS DECIMALES
-        txtSpeed.text = ((int)fSpeed).ToString();
+        txtSpeed.text = "Velocidad: " + ((int)fSpeed).ToString();
 
         // SI LE DAMOS A LA TECLA F
         if (Input.GetKeyDown(KeyCode.F)) {
@@ -72,8 +72,8 @@ public class TroncomovilScript : MonoBehaviour {
 
             // SI ESTA EL FRENOACTIVO LE CAMBIAMOS EL TEXTO A ON/OFF
             if (frenoManoActivo) {
-                txtFrenoMano.text = "Handbrake: on";
-            } else txtFrenoMano.text = "Handbrake: off";
+                txtFrenoMano.text = "Freno de Mano: On";
+            } else txtFrenoMano.text = "Freno de Mano: Off";
         }
 
         
@@ -93,15 +93,19 @@ public class TroncomovilScript : MonoBehaviour {
         //print(vPos + ":" + hPos);
         //print("Velocidad: " + fSpeed);
 
+        // FRENO OFF NO ESTA FRENADO
         if (!frenoManoActivo) {
-            //print("No frena");
-            if (vPos > 0) { // AVANZA CON LA FLECHA HACIA DELANTE
+            
+            // AVANZA CON LA FLECHA HACIA DELANTE CON LAS RUEDAS TRASERAS
+            if (vPos > 0) { 
                 txtMarcha.text = "Marcha Adelante";
 
                 // DESACTIVA LA LUZ DE FRENADO
                 materialFreno.DisableKeyword("_EMISSION");
 
-                SoltarFreno(); // SUELTO EL FRENO
+                // SUELTO EL FRENO
+                SoltarFreno();
+
                 // VAMOS HACER TRACCION A LAS TRASERAS PARA QUE AVANCE
                 wcBackL.motorTorque = fuerzaMaximaMotor * vPos;
                 wcBackR.motorTorque = fuerzaMaximaMotor * vPos;
