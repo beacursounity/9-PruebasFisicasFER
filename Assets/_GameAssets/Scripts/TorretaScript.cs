@@ -31,8 +31,11 @@ public class TorretaScript : MonoBehaviour {
         float xR = Input.GetAxis("Vertical");
         // RECOJO LA FLECHA HORIZONTAL DERECHA/IZQUIERDA
         float yR = Input.GetAxis("Horizontal");
+
         // ROTAMOS EL CAÑON EN HORIZONTAL EN EL EJE DE LA Y
         //baseCanyon.Rotate(0, yR, 0);
+        // ROTAMOS EL CAÑON EN VERTICAL EN EL EJE DE LA X
+        //ejeCanyon.transform.Rotate(xR * -1, yR, 0);
 
         // NEW NOV-25
         // PONDREMOS LIMITES EN EL MOVIMIENTO
@@ -40,20 +43,18 @@ public class TorretaScript : MonoBehaviour {
         // ROTACION ACUMULADA HORIZONTAL
         rotacionHorizontal += yR;
 
-        // PONEMOS EL LIMITE
+        // PONEMOS EL LIMITE HORIZONTAL
         rotacionHorizontal = Mathf.Clamp(rotacionHorizontal, -90, 90);
-        baseCanyon.Rotate(0, yR, 0);
         baseCanyon.rotation = Quaternion.Euler(0, rotacionHorizontal, 0);
 
         // ROTACION ACUMULADA VERTICAL
         rotacionVertical += xR;
 
-        // PONEMOS EL LIMITE
+        // PONEMOS EL LIMITE VERTICAL
         rotacionVertical = Mathf.Clamp(rotacionVertical, -20, 20);
         // ROTAMOS EL EJE DEL CAÑON EN EL EJE DE LA X EN VERTICAL PARA SUBIR Y BAJAR
         // EN EL EJE Y TAMBIEN LO PONGO PARA QUE NO QUEDE RARO EL EJECANYON Y ESTE EN LA MISMA POSICION
         // Y NO SE META EN LA BASECANYON
-        ejeCanyon.transform.Rotate(xR * -1, yR, 0);
         ejeCanyon.rotation = Quaternion.Euler(rotacionVertical * -1, rotacionHorizontal, 0);
 
 
